@@ -38,17 +38,17 @@ class User(models.Model):
         return self.name
 
 
-class Tweet(AbstactTimeStampedModel):
-    payload = models.CharField(max_length=100)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Tweet(AbstractTimeStampedModel):
+    payload = models.TextField(max_length=180)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tweets")
 
     def __str__(self):
         return self.payload
 
 
-class Like(AbstactTimeStampedModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
+class Like(AbstractTimeStampedModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="likes")
+    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE, related_name="likes")
 
     def __str__(self):
         return f"{self.user} | {self.tweet}"
